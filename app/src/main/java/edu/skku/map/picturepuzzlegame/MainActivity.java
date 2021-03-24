@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView sampleImage  = findViewById(R.id.sampleImage);
         gridView = findViewById(R.id.gridView);
 
-        //res폴더에 저장된 사진을 Bitmap으로 만들 때 사용한다.
+        //res폴더에 저장된 사진을 Bitmap으로 만들 때 사용한다.것 <- 샘플 이미지 띄우기
         Bitmap _bit = BitmapFactory.decodeResource(getResources(), R.drawable.bear);
         _bit = Bitmap.createScaledBitmap(_bit, 500, 500, true);
 
@@ -81,11 +81,11 @@ public class MainActivity extends AppCompatActivity {
 //        Log.d("bitmap size!!!!", Integer.toString(bitmapHeight));
 //        Log.d("bitmap size@@@@", Integer.toString(bitmapWidth));
 
-        //Bitmap을 ImageView의 Background로 저장하기
+        //Bitmap을 ImageView의 Background로 저장하기 <- 샘플이미지 만지는
         BitmapDrawable bitDraw = new BitmapDrawable(getResources(), _bit);
         sampleImage.setBackground(bitDraw);
 
-//        gridAdapter customAdapter = new gridAdapter(this, itemArr);
-//        gridView.setAdapter(customAdapter);
+        gridAdapter customAdapter = new gridAdapter(this, itemArr);
+        gridView.setAdapter(customAdapter);
     }
 }

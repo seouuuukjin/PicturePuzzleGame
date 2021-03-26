@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     Bitmap imgSlice44[][] = new Bitmap[4][4];
 
     GridView gridView;
+    Button btn3, btn4, shuffleBtn;
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView sampleImage  = findViewById(R.id.sampleImage);
         gridView = findViewById(R.id.gridView);
+        btn3 = findViewById(R.id.button3x3);
+        btn4 = findViewById(R.id.button4x4);
+        shuffleBtn = findViewById(R.id.button_shuffle);
 
         //디스플레이 화면 크기 구하기
         Display display = ((WindowManager)this.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
@@ -93,8 +99,23 @@ public class MainActivity extends AppCompatActivity {
         BitmapDrawable bitDraw = new BitmapDrawable(getResources(), bearPic);
         sampleImage.setBackground(bitDraw);
 
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gridAdapter customAdapter = new gridAdapter(context, imgSlice33, 3);
+                gridView.setAdapter(customAdapter);
+            }
+        });
+        btn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gridAdapter customAdapter = new gridAdapter(context, imgSlice44, 4);
+                gridView.setAdapter(customAdapter);
+            }
+        });
+
         //어댑터 생성 및 붙여주기
-        gridAdapter customAdapter = new gridAdapter(this, imgSlice33);
+        gridAdapter customAdapter = new gridAdapter(context, imgSlice33, 3);
         gridView.setAdapter(customAdapter);
     }
 }

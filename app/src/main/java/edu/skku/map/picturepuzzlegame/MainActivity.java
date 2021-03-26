@@ -26,66 +26,52 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.bear
     };
 
+    Bitmap imgSlice33[][] = new Bitmap[3][3];
+    Bitmap imgSlice44[][] = new Bitmap[4][4];
+
     GridView gridView;
 
-//    public class gridAdapter extends BaseAdapter{
-//        LayoutInflater inflater;
-//        Context c;
-//        int items[];
-//
-//        public  gridAdapter(Context c, int arr[]){
-//            this.c = c;
-//            items = arr;
-//        };
-//        public final int getCount(){
-//            //출력할 목록 수 반환
-//            //return apps.size();
-//            return items.length;
-//        }
-//        public final Object getItem(int index){
-//            //apps 배열에서 아이템 호출 해줌
-//            return null;
-//        }
-//        public final long getItemId(int index){
-//            //apps 배열 인덱스 구하기 위한 메소드
-//            return 0;
-//        }
-//        //grid에 앱 정보와 새로 따로 정의한 아이템 레이아웃을 매핑 하는 메소
-//        public View getView(int index, View targetView, ViewGroup parent) {
-//
-//            if(targetView == null){
-//                LayoutInflater inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//                targetView = inflater.inflate(R.layout.item, parent, false);
-//            }
-//            ImageView imageView = (ImageView)targetView.findViewById(R.id.imagePuzzle);
-//            imageView.setImageResource(items[index]);
-//
-//            return targetView;
-//        }
-//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         ImageView sampleImage  = findViewById(R.id.sampleImage);
-        gridView = findViewById(R.id.gridView);
+
 
         //res폴더에 저장된 사진을 Bitmap으로 만들 때 사용한다.것 <- 샘플 이미지 띄우기
-        Bitmap _bit = BitmapFactory.decodeResource(getResources(), R.drawable.bear);
-        _bit = Bitmap.createScaledBitmap(_bit, 500, 500, true);
+        Bitmap bearPic = BitmapFactory.decodeResource(getResources(), R.drawable.bear);
+        bearPic = Bitmap.createScaledBitmap(bearPic, 200, 100, true);
 
         //원본 비트맵 이미지 넓이, 높이
-//        int bitmapWidth = _bit.getWidth();
-//        int bitmapHeight = _bit.getHeight();
-//        Log.d("bitmap size!!!!", Integer.toString(bitmapHeight));
-//        Log.d("bitmap size@@@@", Integer.toString(bitmapWidth));
+        int bearWidth = bearPic.getWidth();
+        Log.d("bitmap size!!!!", Integer.toString(bearWidth));
+
+        int imgSliceWidth33 = bearWidth / 3;
+        //int imgSliceHeight33 = bitmapHeight / 3;
+
+        int imgSliceWidth44 = bearWidth / 4;
+        //int imgSliceHeight44 = bitmapHeight / 4;
+
+        for (int i=0; i<3; i++){
+            for(int j=0; j<3; j++){
+                imgSlice33[i][j] = Bitmap.createBitmap(bearPic, j*imgSliceWidth33, i*imgSliceWidth33, bearWidth, bearWidth);
+            }
+        }
+        for (int i=0; i<4; i++){
+            for(int j=0; j<4; j++){
+                imgSlice44[i][j] = Bitmap.createBitmap(bearPic, j*imgSliceWidth44, i*imgSliceWidth44, bearWidth, bearWidth);
+            }
+        }
+        imgSlice33[3][3] = Bitmap.createBitmap(bearPic, 0,0,1,1);
+        imgSlice33[4][4] = Bitmap.createBitmap(bearPic, 0,0,1,1);
 
         //Bitmap을 ImageView의 Background로 저장하기 <- 샘플이미지 만지는
-        BitmapDrawable bitDraw = new BitmapDrawable(getResources(), _bit);
+        BitmapDrawable bitDraw = new BitmapDrawable(getResources(), bearPic);
         sampleImage.setBackground(bitDraw);
 
-        gridAdapter customAdapter = new gridAdapter(this, itemArr);
+        gridView = findViewById(R.id.gridView);
+        gridAdapter customAdapter = new gridAdapter(this, imgSlice33);
         gridView.setAdapter(customAdapter);
     }
 }

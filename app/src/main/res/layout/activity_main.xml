@@ -45,17 +45,17 @@
         android:id="@+id/gridView"
         android:layout_width="393dp"
         android:layout_height="393dp"
-        android:horizontalSpacing="4dp"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="4dp"
         android:columnWidth="110dp"
+        android:horizontalSpacing="-6dp"
+        android:numColumns="auto_fit"
+        android:overScrollMode="never"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="-8dp"
         app:layout_constraintBottom_toTopOf="@+id/button_shuffle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sampleImage"
         app:layout_constraintVertical_bias="1.0">
-
     </GridView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

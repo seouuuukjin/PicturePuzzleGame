@@ -24,6 +24,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.util.List;
 
@@ -51,12 +52,12 @@ public class MainActivity extends AppCompatActivity {
             density *= 4.0;
         }
         else if(density == 1.5){
-            density *= (8/3);
+            density *= (8 / 3);
         }
         else if(density == 2.0){
             density *= 2.0;
         }
-        return px/density;
+        return px / density;
     }
     private int dpToPx(Context context, float dp){
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //LinearLayout itemView = (LinearLayout)findViewById(R.id.)
         ImageView sampleImage  = findViewById(R.id.sampleImage);
         gridView = findViewById(R.id.gridView);
         btn3 = findViewById(R.id.button3x3);
@@ -125,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
         for (int i=0; i<3; i++){
             for(int j=0; j<3; j++){
                 imgSlice33[i][j] = Bitmap.createBitmap(bearPic, j*imgSliceWidth33, i*imgSliceHeight33, imgSliceWidth33, imgSliceHeight33);
-                //imgSlice33[i][j] = Bitmap.createScaledBitmap(imgSlice33[i][j], size.x - size.x / 100, size.x- size.x / 100, true);
             }
         }
         for (int i=0; i<4; i++){
@@ -146,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
         //Bitmap을 ImageView의 Background로 저장하기. 샘플이미지 설정하는 것임
         BitmapDrawable bitDraw = new BitmapDrawable(getResources(), bearPic);
         sampleImage.setBackground(bitDraw);
+
+//        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        inflater.inflate(R.layout.item, false);
 
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override

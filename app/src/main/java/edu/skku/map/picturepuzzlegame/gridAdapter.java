@@ -15,7 +15,7 @@ import android.widget.ImageView;
 public class gridAdapter extends BaseAdapter {
     LayoutInflater inflater;
     private Context c;
-    Bitmap items[];
+    Bitmap[] items = new Bitmap[9];
 //    int[] items = new int[]{
 //            R.drawable.bear
 //    };
@@ -26,10 +26,11 @@ public class gridAdapter extends BaseAdapter {
 
         for(m=0; m<9; m++){
             if(j == 3){
-                j = j / 3;
+                j = j / 3 - 1;
                 i = i + 1;
             }
-            items[m] = arr[i][j];
+            //items[m] = arr[i][j];
+            items[m] = arr[i][j].copy(arr[i][j].getConfig(), true);
             j++;
         }
     };

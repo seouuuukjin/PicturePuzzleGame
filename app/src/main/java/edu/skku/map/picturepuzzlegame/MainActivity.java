@@ -12,7 +12,9 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,11 +35,54 @@ public class MainActivity extends AppCompatActivity {
 
     Bitmap imgSlice33[][] = new Bitmap[3][3];
     Bitmap imgSlice44[][] = new Bitmap[4][4];
+    Bitmap copy33[][] = new Bitmap[3][3];
+    Bitmap copy44[][] = new Bitmap[4][4];
+
+    //3*3모드인지 4*4모드인지 체크해줄 플래그
+    int modeFlag = 0;
 
     GridView gridView;
     Button btn3, btn4, shuffleBtn;
     Context context = this;
+    private float pxToDp(Context context, float px){
+        float density = context.getResources().getDisplayMetrics().density;
 
+        if(density == 1.0){
+            density *= 4.0;
+        }
+        else if(density == 1.5){
+            density *= (8/3);
+        }
+        else if(density == 2.0){
+            density *= 2.0;
+        }
+        return px/density;
+    }
+    private int dpToPx(Context context, float dp){
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+    }
+    private void shuffleImgSlice(Bitmap[][] arr, int mode){
+        Bitmap tmp1, tmp2;
+        for(int i=0; i<mode; i++) {
+            for(int j =0; j<mode; j++) {
+                int randNum1 = (int) (Math.random() * arr.length);
+                int randNum2 = (int) (Math.random() * arr.length);
+                int randNum3 = (int) (Math.random() * arr.length);
+                int randNum4 = (int) (Math.random() * arr.length);
+                tmp1 = arr[randNum1][randNum2];
+                tmp2 = arr[randNum3][randNum4];
+                arr[randNum1][randNum2] = tmp2;
+                arr[randNum3][randNum4] = tmp1;
+            }
+        }
+    }
+    private void copyBitmapArr(Bitmap[][] src, Bitmap[][] dest, int mode){
+        for(int i=0; i<mode; i++) {
+            for(int j =0; j<mode; j++) {
+                dest[i][j] = src[i][j].copy(src[i][j].getConfig(), true);
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
         imgSlice33[2][2].eraseColor(Color.WHITE);
         imgSlice44[3][3].eraseColor(Color.WHITE);
 
+        copyBitmapArr(imgSlice33, copy33,3);
+        copyBitmapArr(imgSlice44, copy44,4);
+
         //Bitmap을 ImageView의 Background로 저장하기. 샘플이미지 설정하는 것임
         BitmapDrawable bitDraw = new BitmapDrawable(getResources(), bearPic);
         sampleImage.setBackground(bitDraw);
@@ -102,18 +150,36 @@ public class MainActivity extends AppCompatActivity {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gridAdapter customAdapter = new gridAdapter(context, imgSlice33, 3);
+                gridView.setColumnWidth(dpToPx(context, (float)110));
+                gridAdapter customAdapter = new gridAdapter(context, copy33, 3);
                 gridView.setAdapter(customAdapter);
+                modeFlag = 0;
             }
         });
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gridAdapter customAdapter = new gridAdapter(context, imgSlice44, 4);
+                gridView.setColumnWidth(dpToPx(context, (float)90));
+                gridAdapter customAdapter = new gridAdapter(context, copy44, 4);
                 gridView.setAdapter(customAdapter);
+                modeFlag = 1;
             }
         });
-
+        shuffleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(modeFlag == 0){
+                    shuffleImgSlice(imgSlice33, 3);
+                    gridAdapter customAdapter = new gridAdapter(context, imgSlice33, 3);
+                    gridView.setAdapter(customAdapter);
+                }
+                else if(modeFlag == 1){
+                    shuffleImgSlice(imgSlice44, 4);
+                    gridAdapter customAdapter = new gridAdapter(context, imgSlice44, 4);
+                    gridView.setAdapter(customAdapter);
+                }
+            }
+        });
         //어댑터 생성 및 붙여주기
         gridAdapter customAdapter = new gridAdapter(context, imgSlice33, 3);
         gridView.setAdapter(customAdapter);

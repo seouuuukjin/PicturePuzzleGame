@@ -43,12 +43,13 @@
 
     <GridView
         android:id="@+id/gridView"
-        android:layout_width="match_parent"
+        android:layout_width="393dp"
         android:layout_height="393dp"
-        android:horizontalSpacing="10dp"
-        android:numColumns="1"
+        android:horizontalSpacing="4dp"
+        android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp"
+        android:verticalSpacing="4dp"
+        android:columnWidth="110dp"
         app:layout_constraintBottom_toTopOf="@+id/button_shuffle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

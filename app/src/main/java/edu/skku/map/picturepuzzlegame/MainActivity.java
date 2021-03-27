@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -135,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         return -1;
     }
 
-    //checkingNearWhite함수에서 받은 결과 값을 토대로 현재 클릭한 bitmap과 흰색타일이 존재하는 pos의 bitmap을 swap 한다.
+    //checkingNearWhite 함수에서 받은 결과 값을 토대로 현재 클릭한 bitmap과 흰색타일이 존재하는 pos의 bitmap을 swap 한다.
     private void checkAndSwap(int cur){
         if(checkingNearWhite(cur) != -1){
             if(modeFlag == 0){
@@ -147,7 +148,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private int answerCheck(){
-        //구현예정
+        if(modeFlag == 0){
+            int i=0;
+            for(; i<9; i++){
+                if(lastArr33.indexOf(lastArrOrigin33[i]) != i){
+                    break;
+                }
+                if(i == 9){
+                    return 1;
+                }
+                else
+                    return 0;
+            }
+        }
+        else if(modeFlag == 1){
+            int i=0;
+            for(; i<16; i++){
+                if(lastArr44.indexOf(lastArrOrigin44[i]) != i){
+                    break;
+                }
+                if(i == 16){
+                    return 1;
+                }
+                else
+                    return 0;
+            }
+        }
         return 0;
     }
     public class gridAdapter extends BaseAdapter {
@@ -360,11 +386,20 @@ public class MainActivity extends AppCompatActivity {
                 if(modeFlag == 0) {
                     checkAndSwap(position);
                     gridView.setAdapter(customAdapter);
+                    if(answerCheck() == 1){
+                        //정답완성
+                        Toast answerAlert = Toast.makeText(getApplicationContext(), "FINISH!", Toast.LENGTH_SHORT);
+                        answerAlert.show();
+                    }
                 }
                 else if(modeFlag == 1){
                     checkAndSwap(position);
                     gridView.setAdapter(customAdapter);
-
+                    if(answerCheck() == 1){
+                        //정답완성
+                        Toast answerAlert = Toast.makeText(getApplicationContext(), "FINISH!", Toast.LENGTH_SHORT);
+                        answerAlert.show();
+                    }
                 }
             }
         });

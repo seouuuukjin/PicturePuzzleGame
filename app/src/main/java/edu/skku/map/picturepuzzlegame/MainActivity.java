@@ -106,10 +106,10 @@ public class MainActivity extends AppCompatActivity {
     //없다면 -1을 반환한다.
     private int checkingNearWhite(int cur){
         if(modeFlag == 0){
-            if((cur-3)>0 && lastArr33.get(cur-3) == lastArrOrigin33[8]){
+            if((cur-3)>=0 && lastArr33.get(cur-3) == lastArrOrigin33[8]){
                 return cur-3;
             }
-            else if((cur-1)>0 && lastArr33.get(cur-1) == lastArrOrigin33[8]){
+            else if((cur-1)>=0 && lastArr33.get(cur-1) == lastArrOrigin33[8]){
                 return cur-1;
             }
             else if((cur+1)<9 && lastArr33.get(cur+1) == lastArrOrigin33[8]){
@@ -120,16 +120,16 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else if(modeFlag == 1){
-            if((cur-4)>0 && lastArr44.get(cur-4) == lastArrOrigin44[15]){
+            if((cur-4)>=0 && lastArr44.get(cur-4) == lastArrOrigin44[15]){
                 return cur-4;
             }
-            else if((cur-1)>0 && lastArr44.get(cur-1) == lastArrOrigin44[15]){
+            else if((cur-1)>=0 && lastArr44.get(cur-1) == lastArrOrigin44[15]){
                 return cur-1;
             }
             else if((cur+1)<16 && lastArr44.get(cur+1) == lastArrOrigin44[15]){
                 return cur+1;
             }
-            else if((cur+4)>0 && lastArr44.get(cur+4) == lastArrOrigin44[15]){
+            else if((cur+4)<16 && lastArr44.get(cur+4) == lastArrOrigin44[15]){
                 return cur+4;
             }
         }
@@ -148,17 +148,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private int answerCheck(){
+        //System.out.println(12);
         if(modeFlag == 0){
             int i=0;
+            //System.out.println(23);
             for(; i<9; i++){
+                //System.out.println(34);
+                //.out.println(lastArr33.indexOf(lastArrOrigin33[i]));
                 if(lastArr33.indexOf(lastArrOrigin33[i]) != i){
+                    System.out.println(i);
                     break;
                 }
-                if(i == 9){
-                    return 1;
-                }
-                else
-                    return 0;
+                //System.out.println(56);
+            }
+            if(i == 9){
+                //System.out.println(78);
+                return 1;
             }
         }
         else if(modeFlag == 1){
@@ -167,11 +172,9 @@ public class MainActivity extends AppCompatActivity {
                 if(lastArr44.indexOf(lastArrOrigin44[i]) != i){
                     break;
                 }
-                if(i == 16){
-                    return 1;
-                }
-                else
-                    return 0;
+            }
+            if(i == 16) {
+                return 1;
             }
         }
         return 0;
@@ -299,8 +302,8 @@ public class MainActivity extends AppCompatActivity {
             for(int j=0; j<3; j++){
                 lastArrOrigin33[3 * i + j] = Bitmap.createBitmap(bearPic, j*imgSliceWidth33, i*imgSliceHeight33, imgSliceWidth33, imgSliceHeight33);
                 lastArr33.add(lastArrOrigin33[3 * i + j]);
-//                System.out.println(lastArr33.get(3 * i + j));
-//                System.out.println(lastArrOrigin33[3 * i + j]);
+                System.out.println(lastArr33.get(3 * i + j));
+                System.out.println(lastArrOrigin33[3 * i + j]);
             }
         }
         for (int i=0; i<4; i++){
@@ -386,8 +389,10 @@ public class MainActivity extends AppCompatActivity {
                 if(modeFlag == 0) {
                     checkAndSwap(position);
                     gridView.setAdapter(customAdapter);
+                    System.out.println(position);
                     if(answerCheck() == 1){
                         //정답완성
+                        System.out.println("!@!!@!@!@");
                         Toast answerAlert = Toast.makeText(getApplicationContext(), "FINISH!", Toast.LENGTH_SHORT);
                         answerAlert.show();
                     }

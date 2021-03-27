@@ -38,9 +38,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    int[] itemArr = new int[]{
-            R.drawable.bear
-    };
     //3*3에서 사용할 리스트 - 섞기도 하고 실제로 작업이 일어나는 리스트
     ArrayList<Bitmap> lastArr33 = new ArrayList<Bitmap>(9);
     //3*3에서 사용할 원본 배열 - 수정이 전혀 일어나지 않는, 견본으로 쓰일 배열임

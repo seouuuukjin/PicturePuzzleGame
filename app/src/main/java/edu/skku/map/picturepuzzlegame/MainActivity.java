@@ -138,9 +138,20 @@ public class MainActivity extends AppCompatActivity {
         if(checkingNearWhite(cur) != -1){
             if(modeFlag == 0){
                 Collections.swap(lastArr33,cur, checkingNearWhite(cur));
+                if(answerCheck() == 1){
+                    //정답완성이라면
+                    System.out.println("!@!!@!@!@");
+                    Toast answerAlert = Toast.makeText(getApplicationContext(), "FINISH!", Toast.LENGTH_SHORT);
+                    answerAlert.show();
+                }
             }
             else if(modeFlag == 1){
                 Collections.swap(lastArr44,cur,checkingNearWhite(cur));
+                if(answerCheck() == 1){
+                    //정답완성이라면
+                    Toast answerAlert = Toast.makeText(getApplicationContext(), "FINISH!", Toast.LENGTH_SHORT);
+                    answerAlert.show();
+                }
             }
         }
     }
@@ -384,24 +395,14 @@ public class MainActivity extends AppCompatActivity {
 //                System.out.println(position);
 //                System.out.println("!@!!@!@!@");
                 if(modeFlag == 0) {
+                    //checkAndSwap 함수에서 주변에 흰색타일이 있는지 / 있다면 swap / 바뀐 결과가 정답인지체크 를 진행한다.
                     checkAndSwap(position);
                     gridView.setAdapter(customAdapter);
-                    System.out.println(position);
-                    if(answerCheck() == 1){
-                        //정답완성
-                        System.out.println("!@!!@!@!@");
-                        Toast answerAlert = Toast.makeText(getApplicationContext(), "FINISH!", Toast.LENGTH_SHORT);
-                        answerAlert.show();
-                    }
+                    //System.out.println(position);
                 }
                 else if(modeFlag == 1){
                     checkAndSwap(position);
                     gridView.setAdapter(customAdapter);
-                    if(answerCheck() == 1){
-                        //정답완성
-                        Toast answerAlert = Toast.makeText(getApplicationContext(), "FINISH!", Toast.LENGTH_SHORT);
-                        answerAlert.show();
-                    }
                 }
             }
         });
